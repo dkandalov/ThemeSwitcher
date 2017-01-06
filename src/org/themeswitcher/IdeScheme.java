@@ -5,7 +5,6 @@ import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import org.jetbrains.annotations.Nullable;
 
 class IdeScheme {
-
     public EditorColorsScheme getGlobalScheme() {
         return EditorColorsManager.getInstance().getGlobalScheme();
     }

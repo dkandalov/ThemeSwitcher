@@ -2,27 +2,23 @@ package org.themeswitcher.settings;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
 
-@State(name = "SaveTimesSettings",
-		storages = {@com.intellij.openapi.components.Storage(
-				file = "/savetimes_settings.xml")})
+@State(name = "SaveTimesSettings", storages = {@Storage(file = "/savetimes_settings.xml")})
 public class PluginSettings implements PersistentStateComponent<PluginSettings> {
 
 	public String timeToLightMs;
 	public String timeToDarkMs;
 
-	@Nullable
-	@Override
-	public PluginSettings getState() {
+	@Nullable @Override public PluginSettings getState() {
 		return this;
 	}
 
-	@Override
-	public void loadState(PluginSettings state) {
+	@Override public void loadState(PluginSettings state) {
 		XmlSerializerUtil.copyBean(state, this);
 	}
 

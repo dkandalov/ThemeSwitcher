@@ -145,6 +145,5 @@ class ThemeSwitcher {
 	        valid = true;
 	    }
 	    return valid;
-
     }
 }
