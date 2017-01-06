@@ -8,6 +8,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.ui.JBColor;
+import org.themeswitcher.settings.PluginSettings;
 
 import javax.swing.*;
 import java.text.ParseException;
@@ -55,10 +56,8 @@ class ThemeSwitcher {
 	            UIManager.setLookAndFeel(new AquaLookAndFeel());
             }
 
-            JBColor.setDark(this.useDarkTheme(currentScheme));
-            IconLoader.setUseDarkIcons(this.useDarkTheme(currentScheme));
-
-            new DataLayer().setValue("theme", currentScheme);
+            JBColor.setDark(useDarkTheme(currentScheme));
+            IconLoader.setUseDarkIcons(useDarkTheme(currentScheme));
         } catch (UnsupportedLookAndFeelException ignored) {
         }
 
@@ -88,10 +87,8 @@ class ThemeSwitcher {
             } else {
 	            UIManager.setLookAndFeel(new AquaLookAndFeel());
             }
-            JBColor.setDark(this.useDarkTheme(currentScheme));
-            IconLoader.setUseDarkIcons(this.useDarkTheme(currentScheme));
-
-            new DataLayer().setValue("theme", currentScheme);
+            JBColor.setDark(useDarkTheme(currentScheme));
+            IconLoader.setUseDarkIcons(useDarkTheme(currentScheme));
         } catch (UnsupportedLookAndFeelException ignored) {
         }
 
@@ -111,11 +108,9 @@ class ThemeSwitcher {
         ActionToolbarImpl.updateAllToolbarsImmediately();
     }
 
-
-    private boolean useDarkTheme(String theme) {
+	private static boolean useDarkTheme(String theme) {
         return !theme.toLowerCase().equals("default");
     }
-
 
     private static boolean isTimeBetweenTwoTime(String initialTime, String finalTime, String currentTime) throws ParseException {
         String reg = "^([0-1][0-9]|2[0-3]):([0-5][0-9])$";
@@ -123,7 +118,6 @@ class ThemeSwitcher {
 	        throw new IllegalArgumentException("Not a valid time, expecting HH:MM format");
 	    }
 
-	    boolean valid = false;
 	    //Start Time
 	    Date inTime = new SimpleDateFormat("HH:mm").parse(initialTime);
 	    Calendar calendar1 = Calendar.getInstance();
@@ -144,6 +138,7 @@ class ThemeSwitcher {
 	        calendar3.add(Calendar.DATE, 1);
 	    }
 
+	    boolean valid = false;
 	    Date actualTime = calendar3.getTime();
 	    if ((actualTime.after(calendar1.getTime()) || actualTime.compareTo(calendar1.getTime()) == 0)
 	            && actualTime.before(calendar2.getTime())) {
