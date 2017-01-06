@@ -4,13 +4,13 @@ import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import org.jetbrains.annotations.Nullable;
 
-class ColorSchemeManagerImpl {
+class IdeScheme {
 
-    public EditorColorsScheme getGlobalColorScheme() {
+    public EditorColorsScheme getGlobalScheme() {
         return EditorColorsManager.getInstance().getGlobalScheme();
     }
 
-    public EditorColorsScheme getScheme(String scheme) {
+    public EditorColorsScheme schemeByName(String scheme) {
         return EditorColorsManager.getInstance().getScheme(scheme);
     }
 

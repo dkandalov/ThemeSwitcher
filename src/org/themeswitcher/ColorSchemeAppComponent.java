@@ -9,44 +9,37 @@ import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
+
 public class ColorSchemeAppComponent implements ApplicationComponent {
 
     @Override
     public void initComponent() {
-        new SwitchTheme().initTheme();
-        Thread t = new Thread(() -> {
-
-            Calendar aux = Calendar.getInstance(Locale.getDefault());
+	    ThemeSwitcher themeSwitcher = new ThemeSwitcher();
+	    themeSwitcher.initTheme();
+        
+        Thread thread = new Thread(() -> {
+            Calendar calendar = Calendar.getInstance(Locale.getDefault());
             PluginSettings settings = ServiceManager.getService(PluginSettings.class);
 
-            aux.setTimeInMillis(Long.valueOf(settings.timeToLightMs));
-            LocalTime timeToLight = LocalTime.of(aux.get(Calendar.HOUR_OF_DAY), aux.get(Calendar.MINUTE));
-
-            aux.setTimeInMillis(Long.valueOf(settings.timeToDarkMs));
-            LocalTime timeToDark = LocalTime.of(aux.get(Calendar.HOUR_OF_DAY), aux.get(Calendar.MINUTE));
-
-            LocalTime now = LocalTime.now();
             while (true) {
-                now = LocalTime.now();
-                now = now.withMinute(0);
-                now = now.withNano(0);
-                aux.setTimeInMillis(Long.valueOf(settings.timeToLightMs));
-                timeToLight = LocalTime.of(aux.get(Calendar.HOUR_OF_DAY), aux.get(Calendar.MINUTE));
+                calendar.setTimeInMillis(Long.valueOf(settings.timeToLightMs));
+	            LocalTime timeToLight = LocalTime.of(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE));
 
-                aux.setTimeInMillis(Long.valueOf(settings.timeToDarkMs));
-                timeToDark = LocalTime.of(aux.get(Calendar.HOUR_OF_DAY), aux.get(Calendar.MINUTE));
+	            calendar.setTimeInMillis(Long.valueOf(settings.timeToDarkMs));
+	            LocalTime timeToDark = LocalTime.of(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE));
 
-                if (timeToLight.equals(LocalTime.now()) || timeToDark.equals(LocalTime.now())) {
-                    ApplicationManager.getApplication().invokeLater(new ChangeThemeThread());
+	            if (timeToLight.equals(LocalTime.now()) || timeToDark.equals(LocalTime.now())) {
+                    ApplicationManager.getApplication().invokeLater(themeSwitcher::switchTheme);
                     try {
                         Thread.sleep(2 * 60 * 1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    } catch (InterruptedException ignored) {
                     }
                 }
             }
         });
-        t.start();
+        thread.start();
     }
 
     @Override
@@ -56,36 +49,6 @@ public class ColorSchemeAppComponent implements ApplicationComponent {
     @NotNull
     public String getComponentName() {
         return "ColorSchemeAppComponent";
-    }
-
-    class ThreadAux implements Runnable {
-
-        private ApplicationManager manager;
-
-        public ThreadAux(ApplicationManager appMan) {
-            manager = appMan;
-        }
-
-        @Override
-        public void run() {
-            boolean changed = false;
-            Calendar calendarNow = Calendar.getInstance(Locale.getDefault());
-            Calendar calendarToLight = Calendar.getInstance(Locale.getDefault());
-            Calendar calendarToDark = Calendar.getInstance(Locale.getDefault());
-            PluginSettings settings = ServiceManager.getService(PluginSettings.class);
-
-
-            calendarToLight.setTimeInMillis(Long.valueOf(settings.timeToLightMs));
-            calendarToDark.setTimeInMillis(Long.valueOf(settings.timeToDarkMs));
-
-            while (true) {
-                if (calendarNow.equals(calendarToLight) || calendarNow.equals(calendarToDark)) {
-                    ApplicationManager.getApplication().invokeLater(new ChangeThemeThread());
-                }
-                calendarNow = Calendar.getInstance(Locale.getDefault());
-            }
-
-        }
     }
 
 }

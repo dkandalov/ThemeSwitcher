@@ -27,7 +27,6 @@ class PluginSettings implements PersistentStateComponent<PluginSettings> {
         XmlSerializerUtil.copyBean(state, this);
     }
 
-
     void setConfig(Date timeToLight, Date timeToDark) {
         this.timeToLightMs = Long.toString(timeToLight.getTime());
         this.timeToDarkMs = Long.toString(timeToDark.getTime());
