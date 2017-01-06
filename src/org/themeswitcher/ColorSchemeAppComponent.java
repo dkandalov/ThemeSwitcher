@@ -1,3 +1,5 @@
+package org.themeswitcher;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -7,7 +9,7 @@ import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ColorScheme implements ApplicationComponent {
+public class ColorSchemeAppComponent implements ApplicationComponent {
 
     @Override
     public void initComponent() {
@@ -53,7 +55,7 @@ public class ColorScheme implements ApplicationComponent {
 
     @NotNull
     public String getComponentName() {
-        return "ColorScheme";
+        return "ColorSchemeAppComponent";
     }
 
     class ThreadAux implements Runnable {

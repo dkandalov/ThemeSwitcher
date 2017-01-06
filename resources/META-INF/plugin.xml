@@ -22,21 +22,18 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-        <applicationService serviceImplementation="PluginSettings"/>
-        <applicationConfigurable instance="SettingsConfigurable"/>
+        <applicationService serviceImplementation="org.themeswitcher.PluginSettings"/>
+        <applicationConfigurable instance="org.themeswitcher.SettingsConfigurable"/>
     </extensions>
 
     <application-components>
         <component>
-            <implementation-class>ColorScheme</implementation-class>
+            <implementation-class>org.themeswitcher.ColorSchemeAppComponent</implementation-class>
         </component>
-
     </application-components>
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="ThemeSwitcher.Switcher" class="Switcher" text="Change theme" description="Change theme">
+        <action id="ThemeSwitcher.Switcher" class="org.themeswitcher.Switcher" text="Change theme" description="Change theme">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>

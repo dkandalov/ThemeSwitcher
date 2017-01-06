@@ -1,3 +1,5 @@
+package org.themeswitcher;
+
 import apple.laf.AquaLookAndFeel;
 import com.intellij.ide.ui.UISettings;
 import com.intellij.ide.ui.laf.darcula.DarculaLaf;
@@ -17,7 +19,7 @@ import java.util.Locale;
 
 class SwitchTheme {
 
-    private final ColorSchemeManager colorSchemeManager = new ColorSchemeManagerImpl();
+    private final ColorSchemeManagerImpl colorSchemeManager = new ColorSchemeManagerImpl();
 
     private static final String DARCULA_THEME = "Darcula";
     private static final String DEFAULT_THEME = "Default";
@@ -123,7 +125,7 @@ class SwitchTheme {
     }
 
 
-    public static boolean isTimeBetweenTwoTime(String initialTime, String finalTime, String currentTime) throws ParseException {
+    private static boolean isTimeBetweenTwoTime(String initialTime, String finalTime, String currentTime) throws ParseException {
         String reg = "^([0-1][0-9]|2[0-3]):([0-5][0-9])$";
         if (initialTime.matches(reg) && finalTime.matches(reg) && currentTime.matches(reg)) {
             boolean valid = false;

@@ -1,3 +1,5 @@
+package org.themeswitcher;
+
 import com.intellij.ide.plugins.PluginManager;
 import com.intellij.ide.util.PropertiesComponent;
 
@@ -6,7 +8,6 @@ class DataLayer {
     private String prefix;
 
     DataLayer() {
-
         try {
             this.prefix = PluginManager.getPluginByClassName(this.getClass().getName()).toString();
         } catch (NullPointerException e) {

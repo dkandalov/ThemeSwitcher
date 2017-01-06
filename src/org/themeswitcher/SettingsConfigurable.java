@@ -1,3 +1,5 @@
+package org.themeswitcher;
+
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;

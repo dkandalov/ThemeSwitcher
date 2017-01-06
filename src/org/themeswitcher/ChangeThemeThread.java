@@ -1,6 +1,5 @@
-/**
- * Created by Javier on 2/8/16.
- */
+package org.themeswitcher;
+
 public class ChangeThemeThread implements Runnable {
     @Override
     public void run() {

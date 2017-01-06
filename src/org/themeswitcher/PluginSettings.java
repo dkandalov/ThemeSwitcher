@@ -1,3 +1,5 @@
+package org.themeswitcher;
+
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -30,6 +32,4 @@ class PluginSettings implements PersistentStateComponent<PluginSettings> {
         this.timeToLightMs = Long.toString(timeToLight.getTime());
         this.timeToDarkMs = Long.toString(timeToDark.getTime());
     }
-
-
 }
