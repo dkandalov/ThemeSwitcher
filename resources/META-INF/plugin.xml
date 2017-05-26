@@ -23,7 +23,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="org.themeswitcher.settings.PluginSettings"/>
-        <applicationConfigurable instance="org.themeswitcher.settings.SettingsConfigurable"/>
+        <applicationConfigurable instance="org.themeswitcher.settings.SettingsPresenter"/>
     </extensions>
 
     <application-components>

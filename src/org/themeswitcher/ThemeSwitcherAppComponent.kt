@@ -2,7 +2,6 @@ package org.themeswitcher
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ApplicationComponent
-import com.intellij.openapi.components.ServiceManager
 import org.themeswitcher.settings.PluginSettings
 import java.time.LocalTime
 import java.util.*
@@ -16,23 +15,22 @@ class ThemeSwitcherAppComponent: ApplicationComponent {
 
         val thread = Thread {
             val calendar = Calendar.getInstance(Locale.getDefault())
-            val (timeToLightMs, timeToDarkMs) = ServiceManager.getService(PluginSettings::class.java)
+            val (timeToLightMs, timeToDarkMs) = PluginSettings.instance
 
             while (true) {
-                calendar.timeInMillis = java.lang.Long.valueOf(timeToLightMs!!)!!
+                calendar.timeInMillis = timeToLightMs!!.toLong()
                 val timeToLight = LocalTime.of(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE))
 
-                calendar.timeInMillis = java.lang.Long.valueOf(timeToDarkMs!!)!!
+                calendar.timeInMillis = timeToDarkMs!!.toLong()
                 val timeToDark = LocalTime.of(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE))
 
                 val now = LocalTime.now()
                 if (timeToLight == now || timeToDark == now) {
                     ApplicationManager.getApplication().invokeLater { themeSwitcher.switchTheme() }
                     try {
-                        Thread.sleep((2 * 60 * 1000).toLong())
+                        Thread.sleep(2 * 60 * 1000L)
                     } catch (ignored: InterruptedException) {
                     }
-
                 }
             }
         }

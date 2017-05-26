@@ -4,7 +4,6 @@ import apple.laf.AquaLookAndFeel
 import com.intellij.ide.ui.UISettings
 import com.intellij.ide.ui.laf.darcula.DarculaLaf
 import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.editor.colors.EditorColorsManager
 import com.intellij.openapi.editor.colors.EditorColorsScheme
 import com.intellij.openapi.util.IconLoader
@@ -22,7 +21,7 @@ class ThemeSwitcher {
     private val colorSchemeManager = IdeScheme()
 
     fun init(): ThemeSwitcher {
-        val (timeToLightMs, timeToDarkMs) = ServiceManager.getService(PluginSettings::class.java)
+        val (timeToLightMs, timeToDarkMs) = PluginSettings.instance
         if (timeToLightMs == null) return this
         if (timeToDarkMs == null) return this
 
@@ -70,7 +69,7 @@ class ThemeSwitcher {
     }
 
     fun switchTheme() {
-        val currentScheme = colorSchemeManager.globalScheme!!.name
+        val currentScheme = colorSchemeManager.globalScheme.name
 
         try {
             if (currentScheme == DEFAULT_THEME) {
