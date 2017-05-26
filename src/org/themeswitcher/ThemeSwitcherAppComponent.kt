@@ -9,11 +9,10 @@ import java.util.*
 import java.util.Calendar.HOUR_OF_DAY
 import java.util.Calendar.MINUTE
 
-class ColorSchemeAppComponent: ApplicationComponent {
+class ThemeSwitcherAppComponent: ApplicationComponent {
 
     override fun initComponent() {
-        val themeSwitcher = ThemeSwitcher()
-        themeSwitcher.initTheme()
+        val themeSwitcher = ThemeSwitcher().init()
 
         val thread = Thread {
             val calendar = Calendar.getInstance(Locale.getDefault())
@@ -40,7 +39,7 @@ class ColorSchemeAppComponent: ApplicationComponent {
         thread.start()
     }
 
-    override fun disposeComponent() {}
+    override fun getComponentName(): String = this::class.java.canonicalName
 
-    override fun getComponentName() = this::class.java.canonicalName
+    override fun disposeComponent() {}
 }

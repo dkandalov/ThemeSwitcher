@@ -35,8 +35,7 @@ public class SettingsUI {
 	}
 
 	public void saveState(PersistentStateComponent<PluginSettings> stateComponent) {
-		PluginSettings settings = stateAsSettings();
-		stateComponent.loadState(settings);
+		stateComponent.loadState(stateAsSettings());
 	}
 
 	public boolean isNotEqual(PluginSettings settings) {

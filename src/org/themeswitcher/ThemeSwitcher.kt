@@ -5,6 +5,8 @@ import com.intellij.ide.ui.UISettings
 import com.intellij.ide.ui.laf.darcula.DarculaLaf
 import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl
 import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.editor.colors.EditorColorsManager
+import com.intellij.openapi.editor.colors.EditorColorsScheme
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.JBColor
 import org.themeswitcher.settings.PluginSettings
@@ -19,10 +21,10 @@ class ThemeSwitcher {
 
     private val colorSchemeManager = IdeScheme()
 
-    fun initTheme() {
+    fun init(): ThemeSwitcher {
         val (timeToLightMs, timeToDarkMs) = ServiceManager.getService(PluginSettings::class.java)
-        if (timeToLightMs == null) return
-        if (timeToDarkMs == null) return
+        if (timeToLightMs == null) return this
+        if (timeToDarkMs == null) return this
 
         val df = SimpleDateFormat("HH:mm")
 
@@ -55,11 +57,7 @@ class ThemeSwitcher {
         } catch (ignored: UnsupportedLookAndFeelException) {
         }
 
-        var makeActiveScheme = DEFAULT_THEME
-
-        if (darkTheme) {
-            makeActiveScheme = DARCULA_THEME
-        }
+        val makeActiveScheme = if (darkTheme) DARCULA_THEME else DEFAULT_THEME
 
         colorSchemeManager.globalScheme = colorSchemeManager.schemeByName(makeActiveScheme)
 
@@ -67,6 +65,8 @@ class ThemeSwitcher {
             UISettings.getInstance().fireUISettingsChanged()
             ActionToolbarImpl.updateAllToolbarsImmediately()
         }
+
+        return this
     }
 
     fun switchTheme() {
@@ -95,8 +95,19 @@ class ThemeSwitcher {
         ActionToolbarImpl.updateAllToolbarsImmediately()
     }
 
-    companion object {
 
+    class IdeScheme {
+        var globalScheme: EditorColorsScheme
+            get() = EditorColorsManager.getInstance().globalScheme
+            set(value) {
+                EditorColorsManager.getInstance().globalScheme = value
+            }
+
+        fun schemeByName(scheme: String): EditorColorsScheme = EditorColorsManager.getInstance().getScheme(scheme)
+    }
+
+
+    companion object {
         private val DARCULA_THEME = "Darcula"
         private val DEFAULT_THEME = "Default"
 
@@ -104,7 +115,6 @@ class ThemeSwitcher {
             return theme.toLowerCase() != "default"
         }
 
-        @Throws(ParseException::class)
         private fun isTimeBetweenTwoTime(initialTime: String, finalTime: String, currentTime: String): Boolean {
             val reg = "^([0-1][0-9]|2[0-3]):([0-5][0-9])$"
             if (!initialTime.matches(reg.toRegex()) || !finalTime.matches(reg.toRegex()) || !currentTime.matches(reg.toRegex())) {

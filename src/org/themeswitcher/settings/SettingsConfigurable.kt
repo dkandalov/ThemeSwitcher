@@ -11,8 +11,6 @@ class SettingsConfigurable: SearchableConfigurable {
 
     override fun getId(): String = "Theme Switcher"
 
-    override fun enableSearch(option: String) = null
-
     @Nls override fun getDisplayName() = id
 
     override fun createComponent(): JComponent? {
@@ -23,8 +21,6 @@ class SettingsConfigurable: SearchableConfigurable {
     override fun disposeUIResources() {
         settingsUI = null
     }
-
-    override fun getHelpTopic() = null
 
     override fun isModified() =
         !uiIsDisposed() && settingsUI!!.isNotEqual(ServiceManager.getService(PluginSettings::class.java))
@@ -39,6 +35,10 @@ class SettingsConfigurable: SearchableConfigurable {
         if (uiIsDisposed()) return
         settingsUI!!.loadState(ServiceManager.getService(PluginSettings::class.java))
     }
+
+    override fun enableSearch(option: String) = null
+
+    override fun getHelpTopic() = null
 
     private fun uiIsDisposed() = settingsUI == null
 }
