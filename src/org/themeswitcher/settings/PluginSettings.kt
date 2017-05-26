@@ -7,10 +7,10 @@ import com.intellij.openapi.components.Storage
 import com.intellij.util.xmlb.XmlSerializerUtil
 import java.util.*
 
-@State(name = "SaveTimesSettings", storages = arrayOf(Storage(file = "/savetimes_settings.xml")))
+@State(name = "ThemeSwitcher", storages = arrayOf(Storage("theme.switcher.settings.xml")))
 data class PluginSettings(
-    var timeToLightMs: String? = null,
-    var timeToDarkMs: String? = null
+    var timeToLightMs: String = "08:00",
+    var timeToDarkMs: String = "19:00"
 ): PersistentStateComponent<PluginSettings> {
 
     override fun getState(): PluginSettings? = this
@@ -18,11 +18,11 @@ data class PluginSettings(
     override fun loadState(state: PluginSettings) = XmlSerializerUtil.copyBean(state, this)
 
     fun setConfig(timeToLight: Date, timeToDark: Date) {
-        this.timeToLightMs = java.lang.Long.toString(timeToLight.time)
-        this.timeToDarkMs = java.lang.Long.toString(timeToDark.time)
+        timeToLightMs = timeToLight.time.toString()
+        timeToDarkMs = timeToDark.time.toString()
     }
 
     companion object {
-        val instance = ServiceManager.getService(PluginSettings::class.java)
+        val instance: PluginSettings = ServiceManager.getService(PluginSettings::class.java)
     }
 }

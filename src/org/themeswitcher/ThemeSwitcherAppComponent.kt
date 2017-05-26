@@ -18,10 +18,10 @@ class ThemeSwitcherAppComponent: ApplicationComponent {
             val (timeToLightMs, timeToDarkMs) = PluginSettings.instance
 
             while (true) {
-                calendar.timeInMillis = timeToLightMs!!.toLong()
+                calendar.timeInMillis = timeToLightMs.toLong()
                 val timeToLight = LocalTime.of(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE))
 
-                calendar.timeInMillis = timeToDarkMs!!.toLong()
+                calendar.timeInMillis = timeToDarkMs.toLong()
                 val timeToDark = LocalTime.of(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE))
 
                 val now = LocalTime.now()

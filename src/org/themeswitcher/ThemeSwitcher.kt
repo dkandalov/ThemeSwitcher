@@ -22,9 +22,6 @@ class ThemeSwitcher {
 
     fun init(): ThemeSwitcher {
         val (timeToLightMs, timeToDarkMs) = PluginSettings.instance
-        if (timeToLightMs == null) return this
-        if (timeToDarkMs == null) return this
-
         val df = SimpleDateFormat("HH:mm")
 
         val calendar = Calendar.getInstance(Locale.getDefault())
