@@ -3,15 +3,15 @@ package org.themeswitcher.settings;
 import javax.swing.*;
 
 class SettingsUI {
-	public JSpinner lightFromTimeSpinner;
-	public JSpinner lightToTimeSpinner;
+	public JSpinner lightTimeSpinner;
+	public JSpinner darkTimeSpinner;
 	public JPanel panel;
 
 	private void createUIComponents() {
-		lightFromTimeSpinner = new JSpinner(new SpinnerDateModel());
-		lightFromTimeSpinner.setEditor(new JSpinner.DateEditor(lightFromTimeSpinner, "HH:mm"));
+		lightTimeSpinner = new JSpinner(new SpinnerDateModel());
+		lightTimeSpinner.setEditor(new JSpinner.DateEditor(lightTimeSpinner, "HH:mm"));
 
-		lightToTimeSpinner = new JSpinner(new SpinnerDateModel());
-		lightToTimeSpinner.setEditor(new JSpinner.DateEditor(lightToTimeSpinner, "HH:mm"));
+		darkTimeSpinner = new JSpinner(new SpinnerDateModel());
+		darkTimeSpinner.setEditor(new JSpinner.DateEditor(darkTimeSpinner, "HH:mm"));
 	}
 }
