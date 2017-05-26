@@ -24,39 +24,33 @@ class SettingsPresenter: SearchableConfigurable {
     }
 
     override fun isModified() =
-        !uiIsDisposed() && uiStateAsSettings() != PluginSettings.instance
+        settingsUI?.toPluginSettings() != PluginSettings.instance
 
     override fun apply() {
-        if (uiIsDisposed()) return
-        saveUIStateTo(PluginSettings.instance)
+        settingsUI?.let {
+            PluginSettings.instance.loadState(it.toPluginSettings())
+        }
     }
 
     override fun reset() {
-        if (uiIsDisposed()) return
-        loadUIStateFrom(PluginSettings.instance)
-    }
-
-    private fun saveUIStateTo(settings: PluginSettings) {
-        settings.loadState(uiStateAsSettings())
-    }
-
-    private fun loadUIStateFrom(settings: PluginSettings) {
-        settingsUI!!.lightTimeSpinner.value = Date(settings.lightTime.get(MILLI_OF_DAY).toLong())
-        settingsUI!!.darkTimeSpinner.value = Date(settings.darkTime.get(MILLI_OF_DAY).toLong())
+        settingsUI?.loadStateFrom(PluginSettings.instance)
     }
 
     override fun enableSearch(option: String) = null
 
     override fun getHelpTopic() = null
 
-    private fun uiIsDisposed() = settingsUI == null
+    private fun SettingsUI.loadStateFrom(settings: PluginSettings) {
+        lightTimeSpinner.value = Date(settings.lightTime.get(MILLI_OF_DAY).toLong())
+        darkTimeSpinner.value = Date(settings.darkTime.get(MILLI_OF_DAY).toLong())
+    }
 
-    private fun uiStateAsSettings(): PluginSettings {
-        val settings = PluginSettings()
-        settings.setState(
-            LocalTime.ofNanoOfDay((settingsUI!!.lightTimeSpinner.value as Date).time * 1000),
-            LocalTime.ofNanoOfDay((settingsUI!!.darkTimeSpinner.value as Date).time * 1000)
-        )
-        return settings
+    private fun SettingsUI.toPluginSettings(): PluginSettings {
+        return PluginSettings().apply {
+            setState(
+                LocalTime.ofNanoOfDay((lightTimeSpinner.value as Date).time * 1000),
+                LocalTime.ofNanoOfDay((darkTimeSpinner.value as Date).time * 1000)
+            )
+        }
     }
 }
