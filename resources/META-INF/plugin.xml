@@ -1,20 +1,15 @@
 <idea-plugin version="2">
     <id>com.javils.ThemeSwitcher</id>
     <name>ThemeSwitcher</name>
-    <version>1.2</version>
-    <vendor email="javiluke93@gmail.com" url="">JaviLS</vendor>
+    <version>1.4</version>
+    <vendor email="javiluke93@gmail.com; dmitry.kandalov@gmail.com" url="">JaviLS; Dmitry Kandalov</vendor>
 
     <description><![CDATA[
-      Change the theme of IDE between Darcula and Default depends of the hour that you put into the Settings. You can change
-      the hours in Preferences > Other Settings > Theme Switcher.
-
-      Or you can change the theme Manually in Tool > Change Theme.
+      Changes IDE theme between Darcula and Default depending on the time of day.
+      You can configure specific time or set your location so that plugin calculates your local sunrise and sunset time.
+      See "Preferences > Other Settings > Theme Switcher".
     ]]></description>
 
-    <change-notes><![CDATA[
-      Now the plugin change automatically the theme when the times comes.
-    ]]>
-    </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="131.0"/>
