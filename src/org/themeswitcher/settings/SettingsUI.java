@@ -22,14 +22,14 @@ public class SettingsUI {
 	}
 
 	public void loadState(PluginSettings settings) {
-		if (settings.timeToLightMs != null) {
+		if (settings.getTimeToLightMs() != null) {
 			Calendar calendar = Calendar.getInstance(Locale.getDefault());
-			calendar.setTimeInMillis(Long.valueOf(settings.timeToLightMs));
+			calendar.setTimeInMillis(Long.valueOf(settings.getTimeToLightMs()));
 			timeToLight.setValue(calendar.getTime());
 		}
-		if (settings.timeToDarkMs != null) {
+		if (settings.getTimeToDarkMs() != null) {
 			Calendar calendar = Calendar.getInstance(Locale.getDefault());
-			calendar.setTimeInMillis(Long.valueOf(settings.timeToDarkMs));
+			calendar.setTimeInMillis(Long.valueOf(settings.getTimeToDarkMs()));
 			timeToDark.setValue(calendar.getTime());
 		}
 	}
