@@ -19,7 +19,7 @@ class ThemeSwitcher {
     private val colorSchemeManager = IdeScheme()
 
     fun init(): ThemeSwitcher {
-        val (lightTime, darkTime) = PluginSettings.instance
+        val (lightTime, darkTime) = PluginSettings.instance.time()
 
         val now = LocalTime.now()
         val darkTheme = now < lightTime || now > darkTime

@@ -11,7 +11,7 @@ class ThemeSwitcherAppComponent: ApplicationComponent {
         val themeSwitcher = ThemeSwitcher().init()
 
         val thread = Thread {
-            val (lightTime, darkTime) = PluginSettings.instance
+            val (lightTime, darkTime) = PluginSettings.instance.time()
 
             while (true) {
                 val now = LocalTime.now()

@@ -2,8 +2,6 @@ package org.themeswitcher.settings
 
 import com.intellij.openapi.options.SearchableConfigurable
 import org.jetbrains.annotations.Nls
-import java.time.LocalTime
-import java.time.temporal.ChronoField.MILLI_OF_DAY
 import java.util.*
 import javax.swing.JComponent
 
@@ -41,15 +39,16 @@ class SettingsPresenter: SearchableConfigurable {
     override fun getHelpTopic() = null
 
     private fun SettingsUI.loadStateFrom(settings: PluginSettings) {
-        lightTimeSpinner.value = Date(settings.lightTime.get(MILLI_OF_DAY).toLong())
-        darkTimeSpinner.value = Date(settings.darkTime.get(MILLI_OF_DAY).toLong())
+        val (lightTime, darkTime) = settings.time()
+        lightTimeSpinner.value = Date(lightTime.toMillis())
+        darkTimeSpinner.value = Date(darkTime.toMillis())
     }
 
     private fun SettingsUI.toPluginSettings(): PluginSettings {
         return PluginSettings().apply {
-            setState(
-                LocalTime.ofNanoOfDay((lightTimeSpinner.value as Date).time * 1000),
-                LocalTime.ofNanoOfDay((darkTimeSpinner.value as Date).time * 1000)
+            setTime(
+                (lightTimeSpinner.value as Date).time.millisToLocalTime(),
+                (darkTimeSpinner.value as Date).time.millisToLocalTime()
             )
         }
     }
